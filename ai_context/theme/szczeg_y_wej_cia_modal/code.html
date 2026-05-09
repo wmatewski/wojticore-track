@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+
+<html lang="pl"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Szczegóły Wejścia - Wojticore</title>
+<!-- Google Fonts: Inter -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<style>
+        .material-symbols-outlined {
+            font-family: 'Material Symbols Outlined';
+            font-weight: normal;
+            font-style: normal;
+            font-size: 24px;
+            line-height: 1;
+            letter-spacing: normal;
+            text-transform: none;
+            display: inline-block;
+            white-space: nowrap;
+            word-wrap: normal;
+            direction: ltr;
+            -webkit-font-feature-settings: 'liga';
+            -webkit-font-smoothing: antialiased;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "outline-variant": "#c3c6d7",
+                        "surface-variant": "#e1e3e4",
+                        "surface": "#f8f9fa",
+                        "inverse-on-surface": "#f0f1f2",
+                        "secondary": "#575e70",
+                        "on-primary-container": "#eeefff",
+                        "background": "#f8f9fa",
+                        "surface-container": "#edeeef",
+                        "primary-fixed-dim": "#b4c5ff",
+                        "on-tertiary-fixed": "#360f00",
+                        "on-primary": "#ffffff",
+                        "tertiary": "#943700",
+                        "inverse-primary": "#b4c5ff",
+                        "on-tertiary-container": "#ffede6",
+                        "on-secondary-container": "#5c6274",
+                        "surface-bright": "#f8f9fa",
+                        "tertiary-fixed-dim": "#ffb596",
+                        "on-tertiary": "#ffffff",
+                        "error": "#ba1a1a",
+                        "primary": "#004ac6",
+                        "error-container": "#ffdad6",
+                        "surface-dim": "#d9dadb",
+                        "secondary-container": "#d9dff5",
+                        "on-error-container": "#93000a",
+                        "surface-container-high": "#e7e8e9",
+                        "inverse-surface": "#2e3132",
+                        "tertiary-container": "#bc4800",
+                        "secondary-fixed": "#dce2f7",
+                        "surface-container-lowest": "#ffffff",
+                        "tertiary-fixed": "#ffdbcd",
+                        "on-primary-fixed-variant": "#003ea8",
+                        "on-secondary-fixed-variant": "#404758",
+                        "surface-tint": "#0053db",
+                        "on-surface-variant": "#434655",
+                        "primary-fixed": "#dbe1ff",
+                        "on-background": "#191c1d",
+                        "on-primary-fixed": "#00174b",
+                        "secondary-fixed-dim": "#c0c6db",
+                        "surface-container-highest": "#e1e3e4",
+                        "surface-container-low": "#f3f4f5",
+                        "outline": "#737686",
+                        "on-secondary": "#ffffff",
+                        "on-tertiary-fixed-variant": "#7d2d00",
+                        "on-error": "#ffffff",
+                        "on-secondary-fixed": "#141b2b",
+                        "primary-container": "#2563eb",
+                        "on-surface": "#191c1d"
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    spacing: {
+                        "unit": "4px",
+                        "container-max": "1280px",
+                        "margin-mobile": "16px",
+                        "margin-desktop": "32px",
+                        "gutter": "24px"
+                    },
+                    fontFamily: {
+                        "body-md": ["Inter"],
+                        "label-sm": ["Inter"],
+                        "display": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "label-md": ["Inter"],
+                        "headline-lg": ["Inter"]
+                    },
+                    fontSize: {
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "label-sm": ["12px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "500" }],
+                        "display": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                        "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }],
+                        "label-md": ["14px", { "lineHeight": "20px", "fontWeight": "500" }],
+                        "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600" }]
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-background min-h-screen text-on-surface flex items-center justify-center">
+<!-- Modal Backdrop / Overlay -->
+<div class="fixed inset-0 bg-on-surface/20 backdrop-blur-sm z-50 flex items-center justify-center p-margin-mobile md:p-margin-desktop overflow-y-auto">
+<!-- Modal Container -->
+<div aria-labelledby="modal-title" aria-modal="true" class="relative w-full max-w-[1000px] bg-surface-container-lowest rounded-xl border border-outline-variant shadow-[0px_4px_24px_rgba(0,0,0,0.08)] flex flex-col my-auto" role="dialog">
+<!-- Header -->
+<div class="flex items-center justify-between px-gutter py-6 border-b border-outline-variant bg-surface-container-lowest rounded-t-xl sticky top-0 z-10">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-full bg-primary-fixed flex items-center justify-center text-on-primary-fixed">
+<span class="material-symbols-outlined" data-icon="travel_explore">travel_explore</span>
+</div>
+<div>
+<h2 class="font-headline-md text-headline-md text-on-surface" id="modal-title">Szczegóły kliknięcia</h2>
+<p class="font-label-md text-label-md text-secondary mt-1">Pełny raport analityczny zarejestrowanego wejścia.</p>
+</div>
+</div>
+<button aria-label="Zamknij" class="w-10 h-10 flex items-center justify-center rounded-full text-secondary hover:bg-surface-container hover:text-on-surface transition-colors">
+<span class="material-symbols-outlined" data-icon="close">close</span>
+</button>
+</div>
+<!-- Body - Bento Grid Layout -->
+<div class="p-gutter overflow-y-auto max-h-[716px] bg-surface flex flex-col gap-6">
+<!-- Top Row: Essential Info & Location -->
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+<!-- Podstawowe Informacje -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-lg p-6 flex flex-col gap-5 shadow-sm">
+<div class="flex items-center gap-2 border-b border-surface-variant pb-3">
+<span class="material-symbols-outlined text-secondary text-[20px]" data-icon="info">info</span>
+<h3 class="font-label-sm text-label-sm text-secondary uppercase tracking-wider">Podstawowe Informacje</h3>
+</div>
+<dl class="grid grid-cols-2 gap-x-4 gap-y-5">
+<div class="flex flex-col gap-1">
+<dt class="font-label-sm text-label-sm text-secondary">ID Rekordu</dt>
+<dd class="font-body-md text-body-md text-on-surface font-medium">#847291A</dd>
+</div>
+<div class="flex flex-col gap-1">
+<dt class="font-label-sm text-label-sm text-secondary">ID Linku</dt>
+<dd class="font-body-md text-body-md text-primary font-medium hover:underline cursor-pointer">kampania_wiosna_24</dd>
+</div>
+<div class="flex flex-col gap-1">
+<dt class="font-label-sm text-label-sm text-secondary">Data Utworzenia</dt>
+<dd class="font-body-md text-body-md text-on-surface">24 Paź 2024, 14:32:05</dd>
+</div>
+<div class="flex flex-col gap-1">
+<dt class="font-label-sm text-label-sm text-secondary">Źródło (Referer)</dt>
+<dd class="font-body-md text-body-md text-on-surface truncate" title="https://t.co/xyz123">https://t.co/xyz123</dd>
+</div>
+</dl>
+</div>
+<!-- Sieć i Lokalizacja -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-lg p-6 flex flex-col gap-5 shadow-sm">
+<div class="flex items-center gap-2 border-b border-surface-variant pb-3">
+<span class="material-symbols-outlined text-secondary text-[20px]" data-icon="public">public</span>
+<h3 class="font-label-sm text-label-sm text-secondary uppercase tracking-wider">Sieć i Lokalizacja</h3>
+</div>
+<dl class="grid grid-cols-2 gap-x-4 gap-y-5">
+<div class="flex flex-col gap-1">
+<dt class="font-label-sm text-label-sm text-secondary">Adres IP</dt>
+<dd class="font-body-md text-body-md text-on-surface font-medium">185.213.15.42</dd>
+</div>
+<div class="flex flex-col gap-1">
+<dt class="font-label-sm text-label-sm text-secondary">Dostawca (ISP)</dt>
+<dd class="font-body-md text-body-md text-on-surface">Orange Polska S.A.</dd>
+</div>
+<div class="flex flex-col gap-1">
+<dt class="font-label-sm text-label-sm text-secondary">Kraj / Miasto</dt>
+<dd class="font-body-md text-body-md text-on-surface flex items-center gap-2">
+<span class="inline-flex items-center px-2 py-0.5 rounded bg-surface-container-high text-on-surface-variant font-label-sm text-label-sm">PL</span>
+                                    Warszawa
+                                </dd>
+</div>
+<div class="flex flex-col gap-1">
+<dt class="font-label-sm text-label-sm text-secondary">Hostname</dt>
+<dd class="font-body-md text-body-md text-on-surface truncate" title="host-185-213-15-42.orange.pl">host-185-213-15...orange.pl</dd>
+</div>
+</dl>
+</div>
+</div>
+<!-- Middle Row: Device & System -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-lg p-6 flex flex-col gap-5 shadow-sm">
+<div class="flex items-center gap-2 border-b border-surface-variant pb-3">
+<span class="material-symbols-outlined text-secondary text-[20px]" data-icon="devices">devices</span>
+<h3 class="font-label-sm text-label-sm text-secondary uppercase tracking-wider">Urządzenie i System</h3>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+<!-- Środowisko -->
+<dl class="flex flex-col gap-4">
+<div class="flex flex-col gap-1">
+<dt class="font-label-sm text-label-sm text-secondary">Urządzenie</dt>
+<dd class="font-body-md text-body-md text-on-surface">Desktop</dd>
+</div>
+<div class="flex flex-col gap-1">
+<dt class="font-label-sm text-label-sm text-secondary">System Operacyjny</dt>
+<dd class="font-body-md text-body-md text-on-surface">Windows 11</dd>
+</div>
+<div class="flex flex-col gap-1">
+<dt class="font-label-sm text-label-sm text-secondary">Przeglądarka</dt>
+<dd class="font-body-md text-body-md text-on-surface">Chrome 120.0.0.0</dd>
+</div>
+</dl>
+<!-- Ekran i Język -->
+<dl class="flex flex-col gap-4">
+<div class="flex flex-col gap-1">
+<dt class="font-label-sm text-label-sm text-secondary">Rozdzielczość Ekranu</dt>
+<dd class="font-body-md text-body-md text-on-surface">1920 x 1080</dd>
+</div>
+<div class="flex flex-col gap-1">
+<dt class="font-label-sm text-label-sm text-secondary">Orientacja</dt>
+<dd class="font-body-md text-body-md text-on-surface">Landscape (Pozioma)</dd>
+</div>
+<div class="flex flex-col gap-1">
+<dt class="font-label-sm text-label-sm text-secondary">Język Przeglądarki</dt>
+<dd class="font-body-md text-body-md text-on-surface">pl-PL, en-US</dd>
+</div>
+</dl>
+<!-- Czas i Platforma -->
+<dl class="flex flex-col gap-4">
+<div class="flex flex-col gap-1">
+<dt class="font-label-sm text-label-sm text-secondary">Strefa Czasowa</dt>
+<dd class="font-body-md text-body-md text-on-surface">Europe/Warsaw</dd>
+</div>
+<div class="flex flex-col gap-1">
+<dt class="font-label-sm text-label-sm text-secondary">Czas Użytkownika</dt>
+<dd class="font-body-md text-body-md text-on-surface">14:32:04 (Lokalny)</dd>
+</div>
+<div class="flex flex-col gap-1">
+<dt class="font-label-sm text-label-sm text-secondary">Platforma (Navigator)</dt>
+<dd class="font-body-md text-body-md text-on-surface">Win32</dd>
+</div>
+</dl>
+</div>
+<!-- User Agent Full String -->
+<div class="mt-2 bg-surface-container px-4 py-3 rounded-md">
+<dt class="font-label-sm text-label-sm text-secondary mb-1">Pełny User Agent</dt>
+<dd class="font-body-md text-label-md text-on-surface-variant font-mono break-all">Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36</dd>
+</div>
+</div>
+<!-- Bottom Row: Advanced Fingerprinting -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-lg p-6 flex flex-col gap-5 shadow-sm">
+<div class="flex items-center gap-2 border-b border-surface-variant pb-3">
+<span class="material-symbols-outlined text-secondary text-[20px]" data-icon="memory">memory</span>
+<h3 class="font-label-sm text-label-sm text-secondary uppercase tracking-wider">Zaawansowane (Fingerprinting)</h3>
+</div>
+<dl class="grid grid-cols-2 md:grid-cols-4 gap-x-4 gap-y-6">
+<div class="flex flex-col gap-1">
+<dt class="font-label-sm text-label-sm text-secondary">Liczba Rdzeni (Concurrency)</dt>
+<dd class="font-body-md text-body-md text-on-surface">16</dd>
+</div>
+<div class="flex flex-col gap-1">
+<dt class="font-label-sm text-label-sm text-secondary">Pamięć RAM (Oszacowanie)</dt>
+<dd class="font-body-md text-body-md text-on-surface">8 GB</dd>
+</div>
+<div class="flex flex-col gap-1">
+<dt class="font-label-sm text-label-sm text-secondary">Ekran Dotykowy</dt>
+<dd class="font-body-md text-body-md text-on-surface flex items-center gap-1">
+<span class="material-symbols-outlined text-error text-[16px]" data-icon="cancel">cancel</span> Nie
+                            </dd>
+</div>
+<div class="flex flex-col gap-1">
+<dt class="font-label-sm text-label-sm text-secondary">Ciasteczka</dt>
+<dd class="font-body-md text-body-md text-on-surface flex items-center gap-1">
+<span class="material-symbols-outlined text-primary text-[16px]" data-icon="check_circle">check_circle</span> Aktywne
+                            </dd>
+</div>
+<div class="flex flex-col gap-1 col-span-2">
+<dt class="font-label-sm text-label-sm text-secondary">Karta Graficzna (WebGL GPU)</dt>
+<dd class="font-body-md text-body-md text-on-surface truncate" title="ANGLE (NVIDIA, NVIDIA GeForce RTX 3060 Ti Direct3D11 vs_5_0 ps_5_0, D3D11)">ANGLE (NVIDIA, NVIDIA GeForce RTX 3060 Ti...)</dd>
+</div>
+<div class="flex flex-col gap-1">
+<dt class="font-label-sm text-label-sm text-secondary">Liczba Czcionek</dt>
+<dd class="font-body-md text-body-md text-on-surface">54</dd>
+</div>
+<div class="flex flex-col gap-1">
+<dt class="font-label-sm text-label-sm text-secondary">Wtyczki (Plugins)</dt>
+<dd class="font-body-md text-body-md text-on-surface">5</dd>
+</div>
+<div class="flex flex-col gap-1">
+<dt class="font-label-sm text-label-sm text-secondary">Detekcja Webdriver (Bot)</dt>
+<dd class="font-body-md text-body-md text-on-surface flex items-center gap-1">
+<span class="inline-flex px-2 py-1 rounded bg-secondary-container text-on-secondary-container font-label-sm text-label-sm">Brak</span>
+</dd>
+</div>
+</dl>
+</div>
+</div>
+<!-- Footer -->
+<div class="px-gutter py-4 border-t border-outline-variant bg-surface-container-lowest flex justify-end rounded-b-xl">
+<button class="px-6 py-2 border border-outline-variant rounded text-on-surface font-label-md text-label-md hover:bg-surface-container transition-colors focus:ring-2 focus:ring-primary focus:outline-none">
+                    Zamknij
+                </button>
+</div>
+</div>
+</div>
+</body></html>

@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+
+<html lang="pl"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Szczegóły linku - Wojticore</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "outline-variant": "#c3c6d7",
+                        "surface-variant": "#e1e3e4",
+                        "surface": "#f8f9fa",
+                        "inverse-on-surface": "#f0f1f2",
+                        "secondary": "#575e70",
+                        "on-primary-container": "#eeefff",
+                        "background": "#f8f9fa",
+                        "surface-container": "#edeeef",
+                        "primary-fixed-dim": "#b4c5ff",
+                        "on-tertiary-fixed": "#360f00",
+                        "on-primary": "#ffffff",
+                        "tertiary": "#943700",
+                        "inverse-primary": "#b4c5ff",
+                        "on-tertiary-container": "#ffede6",
+                        "on-secondary-container": "#5c6274",
+                        "surface-bright": "#f8f9fa",
+                        "tertiary-fixed-dim": "#ffb596",
+                        "on-tertiary": "#ffffff",
+                        "error": "#ba1a1a",
+                        "primary": "#004ac6",
+                        "error-container": "#ffdad6",
+                        "surface-dim": "#d9dadb",
+                        "secondary-container": "#d9dff5",
+                        "on-error-container": "#93000a",
+                        "surface-container-high": "#e7e8e9",
+                        "inverse-surface": "#2e3132",
+                        "tertiary-container": "#bc4800",
+                        "secondary-fixed": "#dce2f7",
+                        "surface-container-lowest": "#ffffff",
+                        "tertiary-fixed": "#ffdbcd",
+                        "on-primary-fixed-variant": "#003ea8",
+                        "on-secondary-fixed-variant": "#404758",
+                        "surface-tint": "#0053db",
+                        "on-surface-variant": "#434655",
+                        "primary-fixed": "#dbe1ff",
+                        "on-background": "#191c1d",
+                        "on-primary-fixed": "#00174b",
+                        "secondary-fixed-dim": "#c0c6db",
+                        "surface-container-highest": "#e1e3e4",
+                        "surface-container-low": "#f3f4f5",
+                        "outline": "#737686",
+                        "on-secondary": "#ffffff",
+                        "on-tertiary-fixed-variant": "#7d2d00",
+                        "on-error": "#ffffff",
+                        "on-secondary-fixed": "#141b2b",
+                        "primary-container": "#2563eb",
+                        "on-surface": "#191c1d"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "unit": "4px",
+                        "container-max": "1280px",
+                        "margin-mobile": "16px",
+                        "margin-desktop": "32px",
+                        "gutter": "24px"
+                    },
+                    "fontFamily": {
+                        "body-md": ["Inter"],
+                        "label-sm": ["Inter"],
+                        "display": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "label-md": ["Inter"],
+                        "headline-lg": ["Inter"]
+                    },
+                    "fontSize": {
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "label-sm": ["12px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "500" }],
+                        "display": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                        "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }],
+                        "label-md": ["14px", { "lineHeight": "20px", "fontWeight": "500" }],
+                        "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface font-body-md flex h-screen overflow-hidden antialiased">
+<!-- SideNavBar (Desktop) -->
+<nav class="hidden md:flex flex-col fixed left-0 top-0 h-full p-4 gap-2 bg-surface-container-lowest border-r border-outline-variant docked left-0 h-full w-64 z-40">
+<div class="flex items-center gap-3 px-4 py-6 mb-4 border-b border-surface-variant">
+<img alt="Awatar użytkownika" class="w-10 h-10 rounded-full border border-outline-variant object-cover" data-alt="A professional headshot of a young man with short brown hair, wearing a dark blue button-down shirt. The background is a soft, out-of-focus light gray office environment. The lighting is bright and natural, creating a clean, modern, and approachable corporate aesthetic suitable for a dashboard avatar." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBV8sKaWzfcLeGt6LU742FN9WTnapKBzWHAhCxctmGaeNLVqQtg8DTYSH40KJ5JXmK46RsT170XOivxL-xFrmce8wp2Lhxh3li3TKCABfNJtVRaAnG1OgqRqsds_lhR2VQQna0vjpUYcQXACALJ6eQlQqVgRCHyKFYNM9GLkOhZ4RHDSCkIOCKjHBpv4a3hgNzwGUIj64mH6DA0A87nMMStTFCmzRsSK6czMVKSD78klRvI0bqlHY_al10u7sBcPv0BSQnKqEUOpBE"/>
+<div>
+<h2 class="text-headline-sm font-headline-sm font-bold text-primary">Wojticore</h2>
+<p class="font-label-sm text-label-sm text-on-surface-variant">Panel sterowania</p>
+</div>
+</div>
+<button class="bg-primary text-on-primary hover:bg-surface-tint font-label-md text-label-md py-3 px-4 rounded-lg flex items-center justify-center gap-2 w-full mb-6 transition-colors shadow-sm">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">add</span>
+            Skróć link
+        </button>
+<div class="flex flex-col gap-1 w-full flex-1">
+<a class="flex items-center gap-3 px-4 py-3 bg-secondary-container text-on-secondary-container font-bold rounded-lg transition-all hover:bg-surface-container-high click:opacity-80 font-label-md text-label-md" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+                Dashboard
+            </a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container rounded-lg transition-all hover:bg-surface-container-high click:opacity-80 font-label-md text-label-md" href="#">
+<span class="material-symbols-outlined">analytics</span>
+                Analityka
+            </a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container rounded-lg transition-all hover:bg-surface-container-high click:opacity-80 font-label-md text-label-md" href="#">
+<span class="material-symbols-outlined">settings</span>
+                Ustawienia
+            </a>
+</div>
+<div class="mt-auto border-t border-surface-variant pt-2 w-full">
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container rounded-lg transition-all hover:bg-surface-container-high click:opacity-80 font-label-md text-label-md" href="#">
+<span class="material-symbols-outlined">logout</span>
+                Wyloguj
+            </a>
+</div>
+</nav>
+<!-- Main Content Area -->
+<main class="flex-1 flex flex-col h-screen overflow-y-auto md:ml-64 w-full bg-background relative pb-20 md:pb-0">
+<div class="p-margin-mobile md:p-margin-desktop max-w-container-max mx-auto w-full">
+<!-- Breadcrumbs / Back -->
+<div class="flex items-center gap-2 mb-6">
+<a class="text-on-surface-variant hover:text-primary transition-colors flex items-center gap-1" href="#">
+<span class="material-symbols-outlined text-[20px]">arrow_back</span>
+<span class="font-label-md text-label-md">Wróć do listy</span>
+</a>
+</div>
+<!-- Page Header -->
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-gutter">
+<div>
+<div class="flex items-center gap-3 mb-2">
+<h1 class="font-display text-display text-on-surface">Szczegóły linku</h1>
+<span class="bg-surface-container-high text-on-surface font-label-sm text-label-sm px-2.5 py-1 rounded-full uppercase tracking-wider">Aktywny</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant">Zarządzaj ustawieniami i analizuj ruch dla wybranego skrótu.</p>
+</div>
+<button class="flex items-center gap-2 px-4 py-2 border border-error text-error hover:bg-error-container hover:text-on-error-container rounded-lg font-label-md text-label-md transition-colors bg-transparent h-[40px]">
+<span class="material-symbols-outlined text-[20px]">delete</span>
+                    Usuń link
+                </button>
+</div>
+<!-- Bento Grid Layout -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-gutter mb-gutter">
+<!-- Main Info Card -->
+<div class="lg:col-span-2 bg-surface-container-lowest border border-outline-variant rounded-xl p-6 shadow-[0px_4px_12px_rgba(0,0,0,0.02)] flex flex-col gap-6">
+<!-- Short URL -->
+<div class="flex flex-col gap-2">
+<label class="font-label-sm text-label-sm text-secondary uppercase">Skrócony adres URL</label>
+<div class="flex items-center gap-3 bg-surface p-4 rounded-lg border border-surface-variant">
+<span class="material-symbols-outlined text-primary text-[24px]">link</span>
+<span class="font-headline-md text-headline-md text-on-surface truncate flex-1 select-all">wj.co/promo24</span>
+<button class="p-2 text-on-surface-variant hover:text-primary hover:bg-surface-container rounded-md transition-colors" title="Kopiuj">
+<span class="material-symbols-outlined">content_copy</span>
+</button>
+</div>
+</div>
+<div class="w-full h-[1px] bg-outline-variant"></div>
+<!-- Target URL -->
+<div class="flex flex-col gap-2">
+<label class="font-label-sm text-label-sm text-secondary uppercase">Docelowy adres URL (Możesz zmienić)</label>
+<div class="flex items-center gap-3">
+<input class="flex-1 bg-surface-container-lowest border border-outline-variant rounded-lg px-4 py-3 h-[48px] font-body-md text-body-md text-on-surface focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all placeholder:text-secondary" placeholder="Wprowadź nowy URL docelowy" type="url" value="https://www.example.com/kampania-wiosenna-2024-oferta-specjalna"/>
+<button class="px-6 py-3 bg-surface-container-high text-on-surface hover:bg-surface-variant font-label-md text-label-md rounded-lg border border-outline-variant transition-colors h-[48px]">
+                                Zapisz
+                            </button>
+</div>
+</div>
+</div>
+<!-- Stats Card -->
+<div class="bg-primary-container text-on-primary-container rounded-xl p-6 flex flex-col justify-between shadow-[0px_4px_12px_rgba(37,99,235,0.1)] relative overflow-hidden">
+<div class="absolute top-0 right-0 -mt-4 -mr-4 opacity-10">
+<span class="material-symbols-outlined text-[120px]" style="font-variation-settings: 'FILL' 1;">ads_click</span>
+</div>
+<div class="relative z-10">
+<h3 class="font-label-md text-label-md uppercase mb-2 opacity-90">Całkowita liczba kliknięć</h3>
+<div class="font-display text-display text-on-primary-container mb-1">12,458</div>
+<p class="font-label-sm text-label-sm opacity-80">+14% od wczoraj</p>
+</div>
+<div class="relative z-10 mt-6 pt-6 border-t border-on-primary-container/20 flex justify-between items-center">
+<span class="font-label-sm text-label-sm">Ostatnie kliknięcie:</span>
+<span class="font-label-sm text-label-sm font-bold">2 min temu</span>
+</div>
+</div>
+</div>
+<!-- Recent Entries Section -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl shadow-[0px_4px_12px_rgba(0,0,0,0.02)] overflow-hidden flex flex-col">
+<div class="p-6 border-b border-outline-variant flex justify-between items-center bg-surface-bright">
+<h2 class="font-headline-md text-headline-md text-on-surface">Ostatnie wizyty</h2>
+<button class="text-primary hover:text-on-primary-fixed-variant font-label-sm text-label-sm flex items-center gap-1 transition-colors">
+                        Pobierz CSV <span class="material-symbols-outlined text-[16px]">download</span>
+</button>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container-low border-b border-outline-variant">
+<th class="py-3 px-6 font-label-sm text-label-sm text-secondary uppercase tracking-wider font-semibold">Data i czas</th>
+<th class="py-3 px-6 font-label-sm text-label-sm text-secondary uppercase tracking-wider font-semibold">Adres IP</th>
+<th class="py-3 px-6 font-label-sm text-label-sm text-secondary uppercase tracking-wider font-semibold">Lokalizacja</th>
+</tr>
+</thead>
+<tbody class="font-body-md text-body-md">
+<tr class="border-b border-surface-variant hover:bg-surface-container-lowest transition-colors">
+<td class="py-4 px-6 text-on-surface whitespace-nowrap">24 Paź 2024, 14:32:01</td>
+<td class="py-4 px-6 text-on-surface-variant font-mono text-sm">192.168.1.45</td>
+<td class="py-4 px-6 text-on-surface flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px] text-outline">location_on</span>
+                                    Warszawa, PL
+                                </td>
+</tr>
+<tr class="border-b border-surface-variant hover:bg-surface-container-lowest transition-colors">
+<td class="py-4 px-6 text-on-surface whitespace-nowrap">24 Paź 2024, 14:15:22</td>
+<td class="py-4 px-6 text-on-surface-variant font-mono text-sm">89.64.21.102</td>
+<td class="py-4 px-6 text-on-surface flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px] text-outline">location_on</span>
+                                    Kraków, PL
+                                </td>
+</tr>
+<tr class="border-b border-surface-variant hover:bg-surface-container-lowest transition-colors">
+<td class="py-4 px-6 text-on-surface whitespace-nowrap">24 Paź 2024, 13:58:10</td>
+<td class="py-4 px-6 text-on-surface-variant font-mono text-sm">104.28.19.45</td>
+<td class="py-4 px-6 text-on-surface flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px] text-outline">location_on</span>
+                                    Berlin, DE
+                                </td>
+</tr>
+<tr class="border-b border-surface-variant hover:bg-surface-container-lowest transition-colors bg-surface-container-lowest">
+<td class="py-4 px-6 text-on-surface whitespace-nowrap">24 Paź 2024, 12:45:00</td>
+<td class="py-4 px-6 text-on-surface-variant font-mono text-sm">212.182.14.7</td>
+<td class="py-4 px-6 text-on-surface flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px] text-outline">location_on</span>
+                                    Gdańsk, PL
+                                </td>
+</tr>
+<tr class="hover:bg-surface-container-lowest transition-colors">
+<td class="py-4 px-6 text-on-surface whitespace-nowrap">24 Paź 2024, 11:20:33</td>
+<td class="py-4 px-6 text-on-surface-variant font-mono text-sm">34.120.55.221</td>
+<td class="py-4 px-6 text-on-surface flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px] text-outline">location_on</span>
+                                    London, UK
+                                </td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="p-4 border-t border-outline-variant bg-surface-container-lowest flex justify-center">
+<button class="text-primary font-label-md text-label-md hover:underline transition-all">Pokaż więcej</button>
+</div>
+</div>
+</div>
+</main>
+<!-- BottomNavBar (Mobile) -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full z-50 flex justify-around items-center bg-surface border-t border-outline-variant py-2 pb-safe px-4 shadow-sm docked full-width bottom-0 rounded-t-xl">
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-container-low tap:scale-95 duration-100 p-2 rounded-lg min-w-[64px]" href="#">
+<span class="material-symbols-outlined mb-1">home</span>
+<span class="font-label-sm text-label-sm">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center text-primary font-bold hover:bg-surface-container-low tap:scale-95 duration-100 p-2 rounded-lg min-w-[64px]" href="#">
+<span class="material-symbols-outlined mb-1" style="font-variation-settings: 'FILL' 1;">link</span>
+<span class="font-label-sm text-label-sm">Linki</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-container-low tap:scale-95 duration-100 p-2 rounded-lg min-w-[64px]" href="#">
+<span class="material-symbols-outlined mb-1">bar_chart</span>
+<span class="font-label-sm text-label-sm">Staty</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-container-low tap:scale-95 duration-100 p-2 rounded-lg min-w-[64px]" href="#">
+<span class="material-symbols-outlined mb-1">person</span>
+<span class="font-label-sm text-label-sm">Profil</span>
+</a>
+</nav>
+</body></html>

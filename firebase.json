@@ -1,0 +1,6 @@
+{
+  "apphosting": {
+    "app": "wojticore-track",
+    "root": "./"
+  }
+}

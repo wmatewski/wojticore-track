@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+
+<html lang="pl"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Wojticore - Cennik</title>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "outline-variant": "#c3c6d7",
+                        "surface-variant": "#e1e3e4",
+                        "surface": "#f8f9fa",
+                        "inverse-on-surface": "#f0f1f2",
+                        "secondary": "#575e70",
+                        "on-primary-container": "#eeefff",
+                        "background": "#f8f9fa",
+                        "surface-container": "#edeeef",
+                        "primary-fixed-dim": "#b4c5ff",
+                        "on-tertiary-fixed": "#360f00",
+                        "on-primary": "#ffffff",
+                        "tertiary": "#943700",
+                        "inverse-primary": "#b4c5ff",
+                        "on-tertiary-container": "#ffede6",
+                        "on-secondary-container": "#5c6274",
+                        "surface-bright": "#f8f9fa",
+                        "tertiary-fixed-dim": "#ffb596",
+                        "on-tertiary": "#ffffff",
+                        "error": "#ba1a1a",
+                        "primary": "#004ac6",
+                        "error-container": "#ffdad6",
+                        "surface-dim": "#d9dadb",
+                        "secondary-container": "#d9dff5",
+                        "on-error-container": "#93000a",
+                        "surface-container-high": "#e7e8e9",
+                        "inverse-surface": "#2e3132",
+                        "tertiary-container": "#bc4800",
+                        "secondary-fixed": "#dce2f7",
+                        "surface-container-lowest": "#ffffff",
+                        "tertiary-fixed": "#ffdbcd",
+                        "on-primary-fixed-variant": "#003ea8",
+                        "on-secondary-fixed-variant": "#404758",
+                        "surface-tint": "#0053db",
+                        "on-surface-variant": "#434655",
+                        "primary-fixed": "#dbe1ff",
+                        "on-background": "#191c1d",
+                        "on-primary-fixed": "#00174b",
+                        "secondary-fixed-dim": "#c0c6db",
+                        "surface-container-highest": "#e1e3e4",
+                        "surface-container-low": "#f3f4f5",
+                        "outline": "#737686",
+                        "on-secondary": "#ffffff",
+                        "on-tertiary-fixed-variant": "#7d2d00",
+                        "on-error": "#ffffff",
+                        "on-secondary-fixed": "#141b2b",
+                        "primary-container": "#2563eb",
+                        "on-surface": "#191c1d"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "unit": "4px",
+                        "container-max": "1280px",
+                        "margin-mobile": "16px",
+                        "margin-desktop": "32px",
+                        "gutter": "24px"
+                    },
+                    "fontFamily": {
+                        "body-md": ["Inter", "sans-serif"],
+                        "label-sm": ["Inter", "sans-serif"],
+                        "display": ["Inter", "sans-serif"],
+                        "headline-md": ["Inter", "sans-serif"],
+                        "body-lg": ["Inter", "sans-serif"],
+                        "label-md": ["Inter", "sans-serif"],
+                        "headline-lg": ["Inter", "sans-serif"]
+                    },
+                    "fontSize": {
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "label-sm": ["12px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "500" }],
+                        "display": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                        "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }],
+                        "label-md": ["14px", { "lineHeight": "20px", "fontWeight": "500" }],
+                        "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600" }]
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-background text-on-background font-body-md antialiased min-h-screen flex flex-col">
+<!-- TopNavBar -->
+<header class="hidden md:flex sticky top-0 w-full z-50 justify-between items-center px-margin-desktop h-16 bg-surface/80 backdrop-blur-md border-b border-outline-variant">
+<div class="flex items-center gap-12">
+<a class="text-headline-md font-headline-md font-bold text-primary hover:opacity-90 transition-opacity" href="#">Wojticore</a>
+<nav class="flex items-center gap-6">
+<!-- Active Navigation -->
+<a class="text-primary border-b-2 border-primary pb-1 font-label-md text-label-md hover:bg-surface-container-low transition-colors" href="#">Cennik</a>
+<!-- Inactive Navigation -->
+<a class="text-secondary hover:text-primary transition-colors font-label-md text-label-md py-1" href="#">Analityka</a>
+<a class="text-secondary hover:text-primary transition-colors font-label-md text-label-md py-1" href="#">Open Source</a>
+<a class="text-secondary hover:text-primary transition-colors font-label-md text-label-md py-1" href="#">Moje Linki</a>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<button class="font-label-md text-label-md text-on-surface hover:bg-surface-container-low px-4 py-2 rounded-lg transition-colors border border-outline-variant">Zaloguj się</button>
+<button class="font-label-md text-label-md text-on-primary bg-primary-container hover:opacity-90 px-4 py-2 rounded-lg transition-opacity font-bold shadow-sm">Zarejestruj się</button>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="flex-grow flex flex-col items-center justify-center py-20 px-margin-mobile md:px-margin-desktop bg-gradient-to-b from-surface-container-lowest to-background">
+<!-- Hero Section -->
+<div class="text-center max-w-2xl mb-16">
+<h1 class="font-display text-display text-on-surface mb-4">Prosty cennik. Bez niespodzianek.</h1>
+<p class="font-body-lg text-body-lg text-secondary">Zacznij za darmo i skaluj swoje linki w miarę wzrostu potrzeb. Narzędzie stworzone z myślą o analitykach i marketerach.</p>
+</div>
+<!-- Pricing Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-gutter w-full max-w-4xl mx-auto">
+<!-- Plan Darmowy -->
+<div class="bg-surface border border-outline-variant rounded-xl p-[32px] flex flex-col hover:border-outline transition-colors h-full">
+<div class="mb-6">
+<h2 class="font-headline-md text-headline-md text-on-surface">Darmowy</h2>
+<p class="font-body-md text-body-md text-secondary mt-1">Idealny na start dla pojedynczych projektów.</p>
+</div>
+<div class="mb-8 flex items-baseline">
+<span class="font-display text-display text-on-surface">0 zł</span>
+<span class="font-body-md text-body-md text-secondary ml-2">/ mc</span>
+</div>
+<div class="flex-grow">
+<ul class="space-y-4">
+<li class="flex items-start gap-3">
+<span class="material-symbols-outlined text-primary text-[24px]">check_circle</span>
+<span class="font-body-md text-body-md text-on-surface">Domena wojticore.pl</span>
+</li>
+<li class="flex items-start gap-3">
+<span class="material-symbols-outlined text-primary text-[24px]">check_circle</span>
+<span class="font-body-md text-body-md text-on-surface">Limit 100 linków/mc</span>
+</li>
+<li class="flex items-start gap-3 opacity-50">
+<span class="material-symbols-outlined text-secondary text-[24px]">cancel</span>
+<span class="font-body-md text-body-md text-secondary">Brak API</span>
+</li>
+<li class="flex items-start gap-3 opacity-50">
+<span class="material-symbols-outlined text-secondary text-[24px]">cancel</span>
+<span class="font-body-md text-body-md text-secondary">Brak white-labelingu</span>
+</li>
+</ul>
+</div>
+<button class="mt-8 w-full py-3 rounded-lg border border-outline-variant text-on-surface font-label-md text-label-md font-bold hover:bg-surface-container-low transition-colors">Rozpocznij za darmo</button>
+</div>
+<!-- Plan Pro -->
+<div class="bg-surface border-2 border-primary rounded-xl p-[32px] flex flex-col relative shadow-[0_4px_12px_rgba(0,0,0,0.05)] h-full">
+<div class="absolute top-0 right-6 -translate-y-1/2 bg-primary text-on-primary px-4 py-1 rounded-full font-label-sm text-label-sm uppercase tracking-wider font-bold">
+                    Polecany
+                </div>
+<div class="mb-6">
+<h2 class="font-headline-md text-headline-md text-on-surface">Pro</h2>
+<p class="font-body-md text-body-md text-secondary mt-1">Dla profesjonalistów wymagających pełnej kontroli.</p>
+</div>
+<div class="mb-8">
+<div class="flex items-baseline">
+<span class="font-display text-display text-on-surface">10 zł</span>
+<span class="font-body-md text-body-md text-secondary ml-2">/ mc</span>
+</div>
+<div class="font-label-sm text-label-sm text-secondary mt-1 bg-surface-container-low inline-block px-2 py-1 rounded">lub 110 zł/rok (Oszczędzasz 10 zł)</div>
+</div>
+<div class="flex-grow">
+<ul class="space-y-4">
+<li class="flex items-start gap-3">
+<span class="material-symbols-outlined text-primary text-[24px]">check_circle</span>
+<span class="font-body-md text-body-md text-on-surface font-medium">Własna domena</span>
+</li>
+<li class="flex items-start gap-3">
+<span class="material-symbols-outlined text-primary text-[24px]">check_circle</span>
+<span class="font-body-md text-body-md text-on-surface font-medium">Nielimitowane linki</span>
+</li>
+<li class="flex items-start gap-3">
+<span class="material-symbols-outlined text-primary text-[24px]">check_circle</span>
+<span class="font-body-md text-body-md text-on-surface">Pełen dostęp do API</span>
+</li>
+<li class="flex items-start gap-3">
+<span class="material-symbols-outlined text-primary text-[24px]">check_circle</span>
+<span class="font-body-md text-body-md text-on-surface">White-labelling (Brak logo)</span>
+</li>
+</ul>
+</div>
+<button class="mt-8 w-full py-3 rounded-lg bg-primary-container text-on-primary font-label-md text-label-md font-bold hover:opacity-90 transition-opacity shadow-sm">Wybierz Pro</button>
+</div>
+</div>
+</main>
+<!-- Footer -->
+<footer class="w-full py-8 px-margin-mobile md:px-margin-desktop flex flex-col md:flex-row justify-between items-center gap-4 bg-surface-container-low border-t border-outline-variant mt-auto">
+<div class="text-label-md font-label-md font-bold text-on-surface">
+            © 2024 Wojticore. Wszelkie prawa zastrzeżone.
+        </div>
+<div class="flex items-center gap-6">
+<a class="text-secondary hover:text-primary transition-colors font-label-sm text-label-sm" href="#">Prywatność</a>
+<a class="text-secondary hover:text-primary transition-colors font-label-sm text-label-sm" href="#">Regulamin</a>
+<a class="text-secondary hover:text-primary transition-colors font-label-sm text-label-sm" href="#">API</a>
+<a class="text-secondary hover:text-primary transition-colors font-label-sm text-label-sm" href="#">Kontakt</a>
+</div>
+</footer>
+<!-- BottomNavBar (Mobile Only) -->
+<!-- Navigation suppressed for focused transactional/pricing canvas on mobile, but included as per instructions, with inactive states as "Cennik" is not a tab here -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full z-50 flex justify-around items-center bg-surface py-2 pb-safe px-4 border-t border-outline-variant shadow-sm rounded-t-xl">
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-container-low p-2 rounded-lg transition-colors w-16" href="#">
+<span class="material-symbols-outlined" data-weight="regular">home</span>
+<span class="font-label-sm text-label-sm mt-1">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-container-low p-2 rounded-lg transition-colors w-16" href="#">
+<span class="material-symbols-outlined" data-weight="regular">link</span>
+<span class="font-label-sm text-label-sm mt-1">Linki</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-container-low p-2 rounded-lg transition-colors w-16" href="#">
+<span class="material-symbols-outlined" data-weight="regular">bar_chart</span>
+<span class="font-label-sm text-label-sm mt-1">Staty</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-container-low p-2 rounded-lg transition-colors w-16" href="#">
+<span class="material-symbols-outlined" data-weight="regular">person</span>
+<span class="font-label-sm text-label-sm mt-1">Profil</span>
+</a>
+</nav>
+</body></html>

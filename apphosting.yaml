@@ -1,0 +1,35 @@
+# Firebase App Hosting configuration for wojticore-track
+# https://firebase.google.com/docs/app-hosting
+
+runtime: nodejs
+nodeVersion: "20"
+env: standard
+
+# Build configuration
+build:
+  commands:
+    - npm install
+    - npm run build
+
+# Start command
+start: npm start
+
+# Environment variables to be set in App Hosting
+# Add sensitive values like CLERK_SECRET_KEY and DATABASE_URL through Firebase Console
+env:
+  # Public environment variables (safe to expose)
+  NEXT_PUBLIC_APP_URL: ${NEXT_PUBLIC_APP_URL}
+  NEXT_PUBLIC_LINKS_URL: ${NEXT_PUBLIC_LINKS_URL}
+  NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: ${NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY}
+
+# Root directory (where package.json is located)
+rootDirectory: ./
+
+# Enable scaling
+autoScaling:
+  minInstances: 1
+  maxInstances: 100
+
+# Health check configuration
+healthCheck:
+  disabledCheck: false
