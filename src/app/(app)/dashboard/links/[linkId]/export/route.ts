@@ -1,5 +1,4 @@
 import { NextResponse } from "next/server";
-import type { Visit } from "@prisma/client";
 
 import { getAuthSession } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
@@ -77,7 +76,7 @@ export async function GET(_request: Request, { params }: ExportRouteProps) {
     "userAgent",
   ];
 
-  const rows = link.visits.map((visit: Visit) => [
+  const rows = link.visits.map((visit: (typeof link.visits)[number]) => [
     escapeCsv(visit.id),
     escapeCsv(visit.createdAt.toISOString()),
     escapeCsv(link.shortCode),
