@@ -76,7 +76,7 @@ export async function GET(_request: Request, { params }: ExportRouteProps) {
     "userAgent",
   ];
 
-  const rows = link.visits.map((visit: (typeof link.visits)[number]) => [
+  const rows: string[][] = link.visits.map((visit: (typeof link.visits)[number]) => [
     escapeCsv(visit.id),
     escapeCsv(visit.createdAt.toISOString()),
     escapeCsv(link.shortCode),
@@ -107,7 +107,7 @@ export async function GET(_request: Request, { params }: ExportRouteProps) {
     escapeCsv(visit.userAgent),
   ]);
 
-  const csv = [header.join(","), ...rows.map((row) => row.join(","))].join("\n");
+  const csv = [header.join(","), ...rows.map((row: string[]) => row.join(","))].join("\n");
 
   return new NextResponse(csv, {
     headers: {
