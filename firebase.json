@@ -1,6 +1,19 @@
 {
-  "apphosting": {
-    "app": "wojticore-track",
-    "root": "./"
-  }
+  "apphosting": [
+    {
+      "app": "wojticore-track",
+      "root": "./"
+    },
+    {
+      "backendId": "wojticore-track",
+      "rootDir": "/",
+      "ignore": [
+        "node_modules",
+        ".git",
+        "firebase-debug.log",
+        "firebase-debug.*.log",
+        "functions"
+      ]
+    }
+  ]
 }
