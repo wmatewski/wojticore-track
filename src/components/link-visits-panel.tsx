@@ -2,7 +2,7 @@
 
 import { useMemo, useState } from "react";
 
-type VisitRecord = {
+export type VisitRecord = {
   id: string;
   createdAt: string;
   ipAddress: string | null;

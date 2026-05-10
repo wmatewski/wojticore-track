@@ -5,6 +5,7 @@ import { deleteLinkAction } from "@/actions/links";
 import { CopyButton } from "@/components/copy-button";
 import { LinkUpdateForm } from "@/components/link-update-form";
 import { LinkVisitsPanel } from "@/components/link-visits-panel";
+import type { VisitRecord } from "@/components/link-visits-panel";
 import { requireUser } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { buildShortUrl, formatRelativeDate, shortenUrlForDisplay } from "@/lib/site";
@@ -15,11 +16,47 @@ type LinkDetailsPageProps = {
   }>;
 };
 
-function serializeVisit(visit: NonNullable<Awaited<ReturnType<typeof prisma.visit.findFirst>>>) {
+type VisitForStats = {
+  ipAddress: string | null;
+  createdAt: Date;
+};
+
+type VisitForSerialization = {
+  id: string;
+  createdAt: Date;
+  ipAddress: string | null;
+  referer: string | null;
+  userAgent: string | null;
+  country: string | null;
+  city: string | null;
+  isp: string | null;
+  hostname: string | null;
+  screen: string | null;
+  orientation: string | null;
+  language: string | null;
+  timezone: string | null;
+  userTime: string | null;
+  platform: string | null;
+  cores: number | null;
+  ram: number | null;
+  cookies: boolean | null;
+  touchPoints: number | null;
+  device: string | null;
+  os: string | null;
+  browser: string | null;
+  gpu: string | null;
+  fonts: string | null;
+  plugins: string | null;
+  webdriver: boolean | null;
+  updatedAt: Date;
+};
+
+function serializeVisit(visit: VisitForSerialization): VisitRecord {
+  const { updatedAt: _updatedAt, ...visitRecord } = visit;
+
   return {
-    ...visit,
-    createdAt: visit.createdAt.toISOString(),
-    updatedAt: visit.updatedAt.toISOString(),
+    ...visitRecord,
+    createdAt: visitRecord.createdAt.toISOString(),
   };
 }
 
@@ -45,8 +82,16 @@ export default async function LinkDetailsPage({ params }: LinkDetailsPageProps) 
   }
 
   const shortUrl = buildShortUrl(link.shortCode);
-  const uniqueIps = new Set(link.visits.map((visit) => visit.ipAddress).filter(Boolean)).size;
-  const latestVisit = link.visits[0]?.createdAt;
+  const visitsForStats = link.visits as VisitForStats[];
+  const uniqueIps = new Set(
+    visitsForStats
+      .map((visit: VisitForStats) => visit.ipAddress)
+      .filter((ip: string | null): ip is string => Boolean(ip)),
+  ).size;
+  const latestVisit = visitsForStats[0]?.createdAt;
+  const serializedVisits = (link.visits as VisitForSerialization[]).map((visit: VisitForSerialization) =>
+    serializeVisit(visit),
+  );
 
   return (
     <>
@@ -144,7 +189,7 @@ export default async function LinkDetailsPage({ params }: LinkDetailsPageProps) 
       <LinkVisitsPanel
         linkId={link.id}
         linkShortCode={link.shortCode}
-        visits={link.visits.map((visit) => serializeVisit(visit))}
+        visits={serializedVisits}
       />
     </>
   );
