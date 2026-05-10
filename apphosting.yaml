@@ -1,35 +1,46 @@
-# Firebase App Hosting configuration for wojticore-track
-# https://firebase.google.com/docs/app-hosting
+# apphosting.yaml
 
-runtime: nodejs
-nodeVersion: "20"
-env: standard
+runConfig:
+  minInstances: 0
+  maxInstances: 2
+  concurrency: 80
+  cpu: 2
+  memoryMiB: 1024
 
-# Build configuration
-build:
-  commands:
-    - npm install
-    - npm run build
-
-# Start command
-start: npm start
-
-# Environment variables to be set in App Hosting
-# Add sensitive values like CLERK_SECRET_KEY and DATABASE_URL through Firebase Console
 env:
-  # Public environment variables (safe to expose)
-  NEXT_PUBLIC_APP_URL: ${NEXT_PUBLIC_APP_URL}
-  NEXT_PUBLIC_LINKS_URL: ${NEXT_PUBLIC_LINKS_URL}
-  NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: ${NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY}
+  # Public variables
+  - variable: NEXT_PUBLIC_APP_URL
+    value: "https://l.wojmatech.com"
+    availability:
+      - BUILD
+      - RUNTIME
 
-# Root directory (where package.json is located)
-rootDirectory: ./
+  - variable: NEXT_PUBLIC_LINKS_URL
+    value: "https://wojmatech.com"
+    availability:
+      - BUILD
+      - RUNTIME
 
-# Enable scaling
-autoScaling:
-  minInstances: 1
-  maxInstances: 100
+  - variable: NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY
+    value: "pk_live_Y2xlcmsud29qbWF0ZWNoLmNvbSQ"
+    availability:
+      - BUILD
+      - RUNTIME
 
-# Health check configuration
-healthCheck:
-  disabledCheck: false
+  # Private secrets
+  - variable: DATABASE_URL
+    secret: DATABASE_URL
+    availability:
+      - RUNTIME
+
+  - variable: DIRECT_URL
+    secret: DIRECT_URL
+    availability:
+      - BUILD
+      - RUNTIME
+
+  - variable: CLERK_SECRET_KEY
+    secret: CLERK_SECRET_KEY
+    availability:
+      - BUILD
+      - RUNTIME
