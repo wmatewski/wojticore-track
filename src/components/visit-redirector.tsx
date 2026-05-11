@@ -246,8 +246,10 @@ export function VisitRedirector({ visitId, originalUrl }: VisitRedirectorProps) 
           <span className="material-symbols-outlined text-[28px]">travel_explore</span>
         </div>
         <div className="space-y-2">
-          <h1 className="font-headline-md text-headline-md text-on-surface">Trwa przekierowanie</h1>
-          <p className="font-body-md text-body-md text-secondary">
+          <h1 aria-live="polite" className="font-headline-md text-headline-md text-on-surface">
+            Trwa przekierowanie
+          </h1>
+          <p aria-live="polite" className="font-body-md text-body-md text-secondary">
             Zbieramy pełne metadane wejścia, aby zapis wizyty był jak najdokładniejszy.
           </p>
         </div>
