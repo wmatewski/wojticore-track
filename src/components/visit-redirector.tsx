@@ -49,7 +49,7 @@ function getLanguages() {
   return joinDistinctValues(languages, MAX_LANGUAGE_STRING_LENGTH);
 }
 
-function joinDistinctValues(values: Array<string | null | undefined>, maxLength: number) {
+function joinDistinctValues(values: ReadonlyArray<string | null | undefined>, maxLength: number) {
   const result: string[] = [];
   let currentLength = 0;
 
