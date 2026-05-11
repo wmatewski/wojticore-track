@@ -29,6 +29,25 @@ function formatAgentPart(name?: string, version?: string | null) {
   return name ? [name, version].filter(Boolean).join(" ") : null;
 }
 
+export function parseAcceptLanguageHeader(headerValue: string | null) {
+  if (!headerValue) {
+    return null;
+  }
+
+  const languages = headerValue
+    .split(",")
+    .map((part) => part.split(";")[0]?.trim())
+    .filter(Boolean)
+    .slice(0, 6);
+
+  return languages.length > 0 ? languages.join(", ") : null;
+}
+
+export function parsePlatformHint(headerValue: string | null) {
+  const trimmed = headerValue?.replace(/"/g, "").trim();
+  return trimmed ? trimmed : null;
+}
+
 export function getRequestIp(headers: Headers) {
   const forwardedFor = headers.get("x-forwarded-for");
 
@@ -126,6 +145,8 @@ export async function collectRequestVisitSeed(headers: Headers) {
   const ipAddress = getRequestIp(headers);
   const userAgent = headers.get("user-agent");
   const referer = headers.get("referer");
+  const language = parseAcceptLanguageHeader(headers.get("accept-language"));
+  const platform = parsePlatformHint(headers.get("sec-ch-ua-platform"));
   const geo = await lookupGeo(ipAddress);
   const hostname = await resolveHostname(ipAddress);
   const parsedUserAgent = parseUserAgent(userAgent);
@@ -138,6 +159,8 @@ export async function collectRequestVisitSeed(headers: Headers) {
     city: geo.city,
     isp: geo.isp,
     hostname,
+    language,
+    platform,
     device: parsedUserAgent.device,
     os: parsedUserAgent.os,
     browser: parsedUserAgent.browser,
