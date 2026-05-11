@@ -44,6 +44,11 @@ function normalizeString(value: string | null | undefined) {
   return trimmed ? trimmed : null;
 }
 
+function getLanguages() {
+  const languages = navigator.languages.length > 0 ? navigator.languages : [navigator.language];
+  return joinDistinctValues(languages, MAX_LANGUAGE_STRING_LENGTH);
+}
+
 function joinDistinctValues(values: Array<string | null | undefined>, maxLength: number) {
   const result: string[] = [];
   let currentLength = 0;
@@ -165,10 +170,7 @@ async function collectVisitMetadata() {
   return {
     screen: getScreenDetails(),
     orientation: getOrientationDetails(),
-    language: joinDistinctValues(
-      [navigator.language, ...(navigator.languages ?? [])],
-      MAX_LANGUAGE_STRING_LENGTH,
-    ),
+    language: getLanguages(),
     timezone: normalizeString(timezone),
     userTime: getUserTime(),
     platform: normalizeString(navigatorObject.userAgentData?.platform ?? navigator.platform),
