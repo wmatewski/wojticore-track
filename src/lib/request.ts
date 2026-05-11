@@ -44,7 +44,7 @@ export function parseAcceptLanguageHeader(headerValue: string | null) {
 }
 
 export function parsePlatformHint(headerValue: string | null) {
-  const trimmed = headerValue?.replaceAll('"', "").trim();
+  const trimmed = headerValue?.replace(/"/g, "").trim();
   return trimmed ? trimmed : null;
 }
 

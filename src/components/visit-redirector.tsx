@@ -90,7 +90,7 @@ function getOrientationDetails() {
 }
 
 function getUserTime() {
-  const locale = navigator.language || "pl-PL";
+  const locale = navigator.language || undefined;
 
   return new Date().toLocaleString(locale, {
     dateStyle: "short",
