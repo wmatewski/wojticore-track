@@ -89,7 +89,7 @@ npm run db:studio
 - `src/app/(auth)` - logowanie i rejestracja
 - `src/app/(app)/dashboard` - prywatny panel i analityka wlasciciela
 - `src/app/[code]/route.ts` - publiczny skrot linku
-- `src/app/visit/[visitId]` - ekran zapisujacy rozszerzone dane klienta przed redirectem
+- `src/app/visit/[visitId]` - ekran zapisujący rozszerzone dane klienta przed redirectem
 - `src/app/oauth-callback` - finalizacja logowania Google przez Clerk
 - `src/app/api/visits/[visitId]/details` - dopisanie danych przegladarki do wizyty
 - `middleware.ts` - ochrona dashboardu przez Clerk
