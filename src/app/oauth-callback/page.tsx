@@ -1,10 +1,48 @@
 "use client";
 
-import { useClerk } from "@clerk/nextjs";
+import { useAuth, useClerk, useSignUp } from "@clerk/nextjs";
 import Link from "next/link";
-import { useAuth, useSignUp } from "@clerk/nextjs";
 import { useRouter } from "next/navigation";
-import { FormEvent, useEffect, useState } from "react";
+import { FormEvent, useEffect, useRef, useState } from "react";
+
+type SupportedMissingField = "first_name" | "last_name" | "username";
+type SupportedUpdateField = "firstName" | "lastName" | "username";
+type OAuthSignUpSnapshot = {
+  missingFields: string[];
+  firstName: string | null;
+  lastName: string | null;
+  username: string | null;
+  emailAddress: string | null;
+};
+
+const supportedMissingFieldConfig: Record<
+  SupportedMissingField,
+  {
+    autoComplete: string;
+    label: string;
+    name: SupportedUpdateField;
+    placeholder: string;
+  }
+> = {
+  first_name: {
+    autoComplete: "given-name",
+    label: "Imie",
+    name: "firstName",
+    placeholder: "Jan",
+  },
+  last_name: {
+    autoComplete: "family-name",
+    label: "Nazwisko",
+    name: "lastName",
+    placeholder: "Kowalski",
+  },
+  username: {
+    autoComplete: "username",
+    label: "Nazwa uzytkownika",
+    name: "username",
+    placeholder: "jan.kowalski",
+  },
+};
 
 function getClerkErrorMessage(error: unknown, fallback: string) {
   if (
@@ -30,13 +68,91 @@ function getClerkErrorMessage(error: unknown, fallback: string) {
   return fallback;
 }
 
-function splitName(fullName: string) {
-  const parts = fullName.trim().split(/\s+/).filter(Boolean);
+function isSupportedMissingField(field: string): field is SupportedMissingField {
+  return Object.prototype.hasOwnProperty.call(supportedMissingFieldConfig, field);
+}
+
+function normalizeNameToken(value: string) {
+  const trimmedValue = value.trim();
+
+  if (!trimmedValue) {
+    return "";
+  }
+
+  return trimmedValue[0].toUpperCase() + trimmedValue.slice(1).toLowerCase();
+}
+
+function getEmailLocalPart(emailAddress: string | null) {
+  return emailAddress?.split("@")[0] ?? "";
+}
+
+function getEmailNameParts(emailAddress: string | null) {
+  return getEmailLocalPart(emailAddress)
+    .split(/[^a-zA-Z0-9]+/)
+    .map(normalizeNameToken)
+    .filter(Boolean);
+}
+
+function sanitizeUsername(value: string) {
+  return value
+    .normalize("NFKD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase()
+    .replace(/[^a-z0-9._-]+/g, "")
+    .replace(/^[._-]+|[._-]+$/g, "")
+    .slice(0, 32);
+}
+
+function buildSuggestedFieldValues(signUp: OAuthSignUpSnapshot) {
+  const emailNameParts = getEmailNameParts(signUp.emailAddress);
+  const firstName = signUp.firstName?.trim() || emailNameParts[0] || "Uzytkownik";
+  const lastName = signUp.lastName?.trim() || emailNameParts[1] || "Uzytkownik";
+  const usernameSeed =
+    signUp.username?.trim() || getEmailLocalPart(signUp.emailAddress) || `${firstName}.${lastName}`;
 
   return {
-    firstName: parts[0] ?? undefined,
-    lastName: parts.slice(1).join(" ") || undefined,
+    firstName,
+    lastName,
+    username: sanitizeUsername(usernameSeed) || "uzytkownik",
   };
+}
+
+function buildAutoCompleteValues(signUp: OAuthSignUpSnapshot) {
+  const suggestedValues = buildSuggestedFieldValues(signUp);
+  const missingFields = new Set(signUp.missingFields);
+  const values: Partial<Record<SupportedUpdateField, string>> = {};
+
+  if (missingFields.has("first_name")) {
+    values.firstName = suggestedValues.firstName;
+  }
+
+  if (missingFields.has("last_name")) {
+    values.lastName = suggestedValues.lastName;
+  }
+
+  if (missingFields.has("username")) {
+    values.username = suggestedValues.username;
+  }
+
+  return values;
+}
+
+function getMissingFieldsKey(missingFields: string[]) {
+  return [...missingFields].sort().join("|");
+}
+
+function getMissingFieldLabel(field: string) {
+  if (isSupportedMissingField(field)) {
+    return supportedMissingFieldConfig[field].label.toLowerCase();
+  }
+
+  return field.replace(/_/g, " ");
+}
+
+function buildUnsupportedFieldsMessage(fields: string[]) {
+  const labels = fields.map(getMissingFieldLabel).join(", ");
+
+  return `Nie udalo sie automatycznie dokonczyc tworzenia konta. Brakuje jeszcze: ${labels}.`;
 }
 
 export default function OAuthCallbackPage() {
@@ -44,10 +160,33 @@ export default function OAuthCallbackPage() {
   const { isSignedIn } = useAuth();
   const { isLoaded, signUp, setActive } = useSignUp();
   const router = useRouter();
-  const [name, setName] = useState("");
+  const redirectHandledRef = useRef(false);
   const [error, setError] = useState("");
   const [isPending, setIsPending] = useState(false);
   const [isResolving, setIsResolving] = useState(true);
+  const [autoFillAttemptedFor, setAutoFillAttemptedFor] = useState<string | null>(null);
+
+  const missingFields = isLoaded && signUp?.status === "missing_requirements" ? signUp.missingFields : [];
+  const missingFieldsKey = getMissingFieldsKey(missingFields);
+  const supportedMissingFields = missingFields.filter(isSupportedMissingField);
+  const unsupportedMissingFields = missingFields.filter((field) => !isSupportedMissingField(field));
+  const suggestedFieldValues = signUp ? buildSuggestedFieldValues(signUp) : null;
+  const canAutoComplete = signUp ? Object.keys(buildAutoCompleteValues(signUp)).length > 0 : false;
+  const shouldAttemptAutoFill =
+    !isResolving &&
+    !!signUp &&
+    signUp.status === "missing_requirements" &&
+    missingFields.length > 0 &&
+    canAutoComplete &&
+    autoFillAttemptedFor !== missingFieldsKey;
+  const requiresManualInput =
+    !isResolving &&
+    !isPending &&
+    !!signUp &&
+    signUp.status === "missing_requirements" &&
+    supportedMissingFields.length > 0 &&
+    unsupportedMissingFields.length === 0 &&
+    !shouldAttemptAutoFill;
 
   useEffect(() => {
     if (isSignedIn) {
@@ -56,6 +195,12 @@ export default function OAuthCallbackPage() {
   }, [isSignedIn, router]);
 
   useEffect(() => {
+    if (redirectHandledRef.current) {
+      return;
+    }
+
+    redirectHandledRef.current = true;
+
     let isMounted = true;
 
     async function resolveRedirect() {
@@ -66,8 +211,8 @@ export default function OAuthCallbackPage() {
           firstFactorUrl: "/login",
           secondFactorUrl: "/login",
           continueSignUpUrl: "/oauth-callback",
-          afterSignInUrl: "/dashboard",
-          afterSignUpUrl: "/dashboard",
+          signInForceRedirectUrl: "/dashboard",
+          signUpForceRedirectUrl: "/dashboard",
         });
       } catch (callbackError) {
         if (isMounted) {
@@ -87,6 +232,67 @@ export default function OAuthCallbackPage() {
     };
   }, [clerk]);
 
+  useEffect(() => {
+    if (!signUp || signUp.status !== "missing_requirements" || !shouldAttemptAutoFill) {
+      return;
+    }
+
+    const currentSignUp = signUp;
+
+    let isMounted = true;
+
+    async function finalizeMissingFields() {
+      const autoCompleteValues = buildAutoCompleteValues(currentSignUp);
+
+      setAutoFillAttemptedFor(missingFieldsKey);
+      setIsPending(true);
+      setError("");
+
+      try {
+        const result = await currentSignUp.update(autoCompleteValues);
+
+        if (result.status === "complete" && result.createdSessionId && setActive) {
+          await setActive({
+            session: result.createdSessionId,
+            redirectUrl: "/dashboard",
+          });
+          return;
+        }
+
+        if (
+          isMounted &&
+          result.status === "missing_requirements" &&
+          result.missingFields.some((field) => !isSupportedMissingField(field))
+        ) {
+          setError(
+            buildUnsupportedFieldsMessage(
+              result.missingFields.filter((field) => !isSupportedMissingField(field)),
+            ),
+          );
+        }
+      } catch (autoFillError) {
+        if (isMounted) {
+          setError(
+            getClerkErrorMessage(
+              autoFillError,
+              "Nie udalo sie automatycznie dokonczyc logowania przez Google.",
+            ),
+          );
+        }
+      } finally {
+        if (isMounted) {
+          setIsPending(false);
+        }
+      }
+    }
+
+    void finalizeMissingFields();
+
+    return () => {
+      isMounted = false;
+    };
+  }, [missingFieldsKey, setActive, shouldAttemptAutoFill, signUp]);
+
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
@@ -94,32 +300,70 @@ export default function OAuthCallbackPage() {
       return;
     }
 
-    const trimmedName = name.trim();
-
-    if (!trimmedName) {
-      setError("Podaj nazwe wyswietlana, aby dokonczyc logowanie przez Google.");
-      return;
-    }
-
     setIsPending(true);
     setError("");
 
-    const nameParts = splitName(trimmedName);
-    const result = await signUp.update({
-      firstName: nameParts.firstName,
-      lastName: nameParts.lastName,
-    });
+    const formData = new FormData(event.currentTarget);
+    const updateValues: Partial<Record<SupportedUpdateField, string>> = {};
 
-    if (result.status === "complete" && result.createdSessionId && setActive) {
-      await setActive({
-        session: result.createdSessionId,
-        redirectUrl: "/dashboard",
-      });
-      return;
+    for (const field of supportedMissingFields) {
+      const fieldConfig = supportedMissingFieldConfig[field];
+      const rawValue = String(formData.get(fieldConfig.name) ?? "").trim();
+
+      if (!rawValue) {
+        setError(`Uzupelnij pole: ${fieldConfig.label.toLowerCase()}.`);
+        setIsPending(false);
+        return;
+      }
+
+      if (field === "username") {
+        const username = sanitizeUsername(rawValue);
+
+        if (!username) {
+          setError("Podaj poprawna nazwe uzytkownika.");
+          setIsPending(false);
+          return;
+        }
+
+        updateValues.username = username;
+        continue;
+      }
+
+      updateValues[fieldConfig.name] = rawValue;
     }
 
-    setError("Nie udalo sie dokonczyc logowania przez Google.");
-    setIsPending(false);
+    try {
+      const result = await signUp.update(updateValues);
+
+      if (result.status === "complete" && result.createdSessionId && setActive) {
+        await setActive({
+          session: result.createdSessionId,
+          redirectUrl: "/dashboard",
+        });
+        return;
+      }
+
+      if (result.status === "missing_requirements") {
+        const remainingUnsupportedFields = result.missingFields.filter(
+          (field) => !isSupportedMissingField(field),
+        );
+
+        setError(
+          remainingUnsupportedFields.length > 0
+            ? buildUnsupportedFieldsMessage(remainingUnsupportedFields)
+            : "Uzupelnij brakujace dane konta i sprobuj ponownie.",
+        );
+        return;
+      }
+
+      setError("Nie udalo sie dokonczyc logowania przez Google.");
+    } catch (submitError) {
+      setError(
+        getClerkErrorMessage(submitError, "Nie udalo sie zapisac brakujacych danych konta."),
+      );
+    } finally {
+      setIsPending(false);
+    }
   }
 
   return (
@@ -133,7 +377,7 @@ export default function OAuthCallbackPage() {
             Dokoncz tworzenie konta.
           </h1>
           <p className="text-sm leading-7 text-[var(--muted)]">
-            Clerk potrzebuje jeszcze podstawowej nazwy wyswietlanej, zanim aktywuje sesje i przekieruje Cie do dashboardu.
+            Finalizujemy odpowiedz Google i upewniamy sie, ze konto ma komplet danych wymaganych do wejscia do dashboardu.
           </p>
         </div>
 
@@ -143,29 +387,38 @@ export default function OAuthCallbackPage() {
           </div>
         ) : null}
 
-        {isResolving ? (
+        {isResolving || isPending || shouldAttemptAutoFill ? (
           <div className="mt-6 rounded-2xl border border-dashed border-black/10 bg-[var(--background)] px-4 py-6 text-sm leading-7 text-[var(--muted)]">
-            Finalizujemy odpowiedz Google i odczytujemy stan konta z Clerk.
+            {isResolving
+              ? "Finalizujemy odpowiedz Google i odczytujemy stan konta z Clerk."
+              : "Uzupelniamy brakujace dane konta i aktywujemy sesje."}
           </div>
-        ) : isLoaded && signUp?.status === "missing_requirements" ? (
+        ) : requiresManualInput ? (
           <form className="mt-6 space-y-4" onSubmit={handleSubmit}>
-            <div className="space-y-2">
-              <label className="block text-sm font-medium text-[var(--foreground)]" htmlFor="name">
-                Nazwa wyswietlana
-              </label>
-              <input
-                id="name"
-                name="name"
-                type="text"
-                value={name}
-                onChange={(event) => {
-                  setName(event.target.value);
-                }}
-                className="w-full rounded-2xl border border-black/10 bg-white px-4 py-3 text-base outline-none transition focus:border-[var(--accent)] focus:ring-4 focus:ring-[var(--accent)]/12"
-                placeholder="Jan Kowalski"
-                required
-              />
-            </div>
+            {supportedMissingFields.map((field) => {
+              const fieldConfig = supportedMissingFieldConfig[field];
+
+              return (
+                <div className="space-y-2" key={field}>
+                  <label
+                    className="block text-sm font-medium text-[var(--foreground)]"
+                    htmlFor={fieldConfig.name}
+                  >
+                    {fieldConfig.label}
+                  </label>
+                  <input
+                    id={fieldConfig.name}
+                    name={fieldConfig.name}
+                    type="text"
+                    autoComplete={fieldConfig.autoComplete}
+                    defaultValue={suggestedFieldValues?.[fieldConfig.name] ?? ""}
+                    className="w-full rounded-2xl border border-black/10 bg-white px-4 py-3 text-base outline-none transition focus:border-[var(--accent)] focus:ring-4 focus:ring-[var(--accent)]/12"
+                    placeholder={fieldConfig.placeholder}
+                    required
+                  />
+                </div>
+              );
+            })}
 
             <button
               type="submit"
@@ -175,6 +428,18 @@ export default function OAuthCallbackPage() {
               {isPending ? "Konczymy logowanie..." : "Zapisz i przejdz dalej"}
             </button>
           </form>
+        ) : unsupportedMissingFields.length > 0 ? (
+          <div className="mt-6 space-y-4">
+            <p className="text-sm leading-7 text-[var(--muted)]">
+              {buildUnsupportedFieldsMessage(unsupportedMissingFields)}
+            </p>
+            <Link
+              href="/login"
+              className="inline-flex items-center justify-center rounded-full border border-black/10 bg-white px-5 py-3 text-sm font-semibold text-[var(--foreground)] transition hover:border-[var(--accent)]"
+            >
+              Wroc do logowania
+            </Link>
+          </div>
         ) : (
           <div className="mt-6 space-y-4">
             <p className="text-sm leading-7 text-[var(--muted)]">

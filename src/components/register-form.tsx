@@ -394,8 +394,6 @@ export function RegisterForm() {
               Kontynuuj z Google
             </button>
           </div>
-
-          <div id="clerk-captcha" />
         </form>
       )}
     </div>

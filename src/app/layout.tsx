@@ -33,7 +33,10 @@ export default function RootLayout({
         />
       </head>
       <body className={`${inter.variable} min-h-screen antialiased`}>
-        <ClerkProvider>{children}</ClerkProvider>
+        <ClerkProvider>
+          {children}
+          <div id="clerk-captcha" className="fixed bottom-4 right-4 z-50" />
+        </ClerkProvider>
       </body>
     </html>
   );
