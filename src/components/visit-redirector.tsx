@@ -104,7 +104,9 @@ function getPlugins() {
   }
 
   return joinDistinctValues(
-    Array.from(navigator.plugins, (plugin) => plugin.name || plugin.filename || plugin.description),
+    Array.from(navigator.plugins, (plugin) => {
+      return plugin.name || plugin.filename || plugin.description || null;
+    }),
     MAX_LIST_FIELD_LENGTH,
   );
 }
@@ -129,7 +131,13 @@ function getGpu() {
     ? context.getParameter(debugInfo.UNMASKED_RENDERER_WEBGL)
     : context.getParameter(context.RENDERER);
 
-  return joinDistinctValues([String(vendor), String(renderer)], MAX_GPU_STRING_LENGTH);
+  return joinDistinctValues(
+    [
+      typeof vendor === "string" ? vendor : null,
+      typeof renderer === "string" ? renderer : null,
+    ],
+    MAX_GPU_STRING_LENGTH,
+  );
 }
 
 async function getFonts() {
