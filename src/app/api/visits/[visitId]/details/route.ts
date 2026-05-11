@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 
 import { prisma } from "@/lib/prisma";
-import { parseUserAgent } from "@/lib/request";
+import { parseAcceptLanguageHeader, parsePlatformHint, parseUserAgent } from "@/lib/request";
 import { visitMetadataSchema } from "@/lib/validation";
 
 export const dynamic = "force-dynamic";
@@ -35,22 +35,26 @@ export async function POST(request: Request, { params }: VisitDetailsRouteProps)
   }
 
   const normalizedUserAgent = normalizeString(parsed.data.userAgent);
+  const normalizedLanguage =
+    normalizeString(parsed.data.language) ?? parseAcceptLanguageHeader(request.headers.get("accept-language"));
+  const normalizedPlatform =
+    normalizeString(parsed.data.platform) ?? parsePlatformHint(request.headers.get("sec-ch-ua-platform"));
   const userAgentInfo = parseUserAgent(normalizedUserAgent ?? request.headers.get("user-agent"));
 
   const result = await prisma.visit.updateMany({
     where: {
       id: visitId,
     },
-    data: {
-      screen: normalizeString(parsed.data.screen),
-      orientation: normalizeString(parsed.data.orientation),
-      language: normalizeString(parsed.data.language),
-      timezone: normalizeString(parsed.data.timezone),
-      userTime: normalizeString(parsed.data.userTime),
-      platform: normalizeString(parsed.data.platform),
-      userAgent: normalizedUserAgent,
-      cores: normalizeScalar(parsed.data.cores),
-      ram: normalizeScalar(parsed.data.ram),
+      data: {
+        screen: normalizeString(parsed.data.screen),
+        orientation: normalizeString(parsed.data.orientation),
+        language: normalizedLanguage,
+        timezone: normalizeString(parsed.data.timezone),
+        userTime: normalizeString(parsed.data.userTime),
+        platform: normalizedPlatform,
+        userAgent: normalizedUserAgent,
+        cores: normalizeScalar(parsed.data.cores),
+        ram: normalizeScalar(parsed.data.ram),
       cookies: normalizeScalar(parsed.data.cookies),
       touchPoints: normalizeScalar(parsed.data.touchPoints),
       webdriver: normalizeScalar(parsed.data.webdriver),

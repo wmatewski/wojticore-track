@@ -17,7 +17,7 @@ Nowa wersja aplikacji do skrotow linkow i trackingu klikniec zbudowana na:
 - usuwanie linkow
 - publiczny redirect po kodzie `/[code]`
 - zapis wizyt i podstawowej analityki
-- dopisywanie danych przegladarki po stronie klienta przed przekierowaniem
+- posredni ekran `/visit/[visitId]`, ktory dopisuje dane przegladarki po stronie klienta przed finalnym przekierowaniem
 
 ## Wymagane zmienne srodowiskowe
 
@@ -89,7 +89,7 @@ npm run db:studio
 - `src/app/(auth)` - logowanie i rejestracja
 - `src/app/(app)/dashboard` - prywatny panel i analityka wlasciciela
 - `src/app/[code]/route.ts` - publiczny skrot linku
-- `src/app/visit/[visitId]` - ekran zapisujacy dane klienta przed redirectem
+- `src/app/visit/[visitId]` - ekran zapisujacy rozszerzone dane klienta przed redirectem
 - `src/app/oauth-callback` - finalizacja logowania Google przez Clerk
 - `src/app/api/visits/[visitId]/details` - dopisanie danych przegladarki do wizyty
 - `middleware.ts` - ochrona dashboardu przez Clerk

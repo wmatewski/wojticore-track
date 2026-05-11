@@ -27,10 +27,10 @@ export const createLinkSchema = z.object({
 export const visitMetadataSchema = z.object({
   screen: z.string().trim().max(120).nullish(),
   orientation: z.string().trim().max(120).nullish(),
-  language: z.string().trim().max(64).nullish(),
+  language: z.string().trim().max(256).nullish(),
   timezone: z.string().trim().max(120).nullish(),
   userTime: z.string().trim().max(200).nullish(),
-  platform: z.string().trim().max(120).nullish(),
+  platform: z.string().trim().max(200).nullish(),
   userAgent: z.string().trim().max(2048).nullish(),
   cores: z.number().int().min(0).max(128).nullish(),
   ram: z.number().min(0).max(1024).nullish(),

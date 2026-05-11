@@ -57,6 +57,5 @@ export async function GET(request: Request, { params }: RedirectRouteProps) {
     },
   });
 
-  // Redirect directly to original URL
-  return NextResponse.redirect(link.originalUrl);
+  return NextResponse.redirect(new URL(`/visit/${visit.id}`, request.url));
 }
