@@ -35,6 +35,9 @@ const COMMON_FONTS = [
 
 const FONT_CHECK_TIMEOUT_MS = 150;
 const REDIRECT_TIMEOUT_MS = 1200;
+const MAX_LANGUAGE_STRING_LENGTH = 256;
+const MAX_LIST_FIELD_LENGTH = 4000;
+const MAX_GPU_STRING_LENGTH = 400;
 
 function normalizeString(value: string | null | undefined) {
   const trimmed = value?.trim();
@@ -100,7 +103,7 @@ function getPlugins() {
 
   return joinDistinctValues(
     Array.from(navigator.plugins, (plugin) => plugin.name || plugin.filename || plugin.description),
-    4000,
+    MAX_LIST_FIELD_LENGTH,
   );
 }
 
@@ -124,7 +127,7 @@ function getGpu() {
     ? context.getParameter(debugInfo.UNMASKED_RENDERER_WEBGL)
     : context.getParameter(context.RENDERER);
 
-  return joinDistinctValues([String(vendor), String(renderer)], 400);
+  return joinDistinctValues([String(vendor), String(renderer)], MAX_GPU_STRING_LENGTH);
 }
 
 async function getFonts() {
@@ -141,7 +144,7 @@ async function getFonts() {
 
   return joinDistinctValues(
     COMMON_FONTS.filter((fontName) => document.fonts.check(`12px "${fontName}"`)),
-    4000,
+    MAX_LIST_FIELD_LENGTH,
   );
 }
 
@@ -154,7 +157,7 @@ async function collectVisitMetadata() {
     orientation: getOrientationDetails(),
     language: joinDistinctValues(
       [navigator.language, ...(navigator.languages ?? [])],
-      256,
+      MAX_LANGUAGE_STRING_LENGTH,
     ),
     timezone: normalizeString(timezone),
     userTime: getUserTime(),
